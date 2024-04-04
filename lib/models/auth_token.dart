@@ -2,17 +2,24 @@ class AuthToken {
   final String _token;
   final String _userId;
   final DateTime _expiryDate;
+  final String _email;
 
   AuthToken({
     token,
     userId,
     expiryDate,
+    email,
   })  : _token = token,
         _userId = userId,
-        _expiryDate = expiryDate;
+        _expiryDate = expiryDate,
+        _email = email;
 
   bool get isValid {
     return token != null;
+  }
+
+  String get email {
+    return _email;
   }
 
   String? get token {

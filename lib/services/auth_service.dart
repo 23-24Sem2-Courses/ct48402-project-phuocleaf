@@ -66,6 +66,7 @@ class AuthService {
     return AuthToken(
       token: json['idToken'],
       userId: json['localId'],
+      email: json['email'],
       expiryDate: DateTime.now().add(
         Duration(
           seconds: int.parse(

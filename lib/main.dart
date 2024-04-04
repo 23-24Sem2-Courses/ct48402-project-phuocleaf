@@ -1,3 +1,4 @@
+import 'package:ct484_project/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ct484_project/models/product.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.purple,
+      seedColor: Colors.blueGrey,
       secondary: Colors.deepOrange,
       background: Colors.white,
       surfaceTint: Colors.grey[200],
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             home: authManager.isAuth
-                ? const SafeArea(child: ProductsOverviewScreen())
+                ? const SafeArea(child: HomeScreen())
                 : FutureBuilder(
                     future: authManager.tryAutoLogin(),
                     builder: (ctx, snapshot) {

@@ -10,38 +10,40 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authToken = context.read<AuthManager>().authToken;
+    final email = authToken!.email;
     return Drawer(
       child: Column(
         children: <Widget>[
           AppBar(
-            title: const Text('Hello Friend!'),
+            title: Text('Xin chào ${email.split('@')[0].toUpperCase()}!'),
             automaticallyImplyLeading: false,
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.shop),
-            title: const Text('Shop'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
-            },
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.payment),
-            title: const Text('Orders'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
-            },
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Manage Products'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
-            },
-          ),
-          const Divider(),
+          // ListTile(
+          //   leading: const Icon(Icons.shop),
+          //   title: const Text('Shop'),
+          //   onTap: () {
+          //     Navigator.of(context).pushReplacementNamed('/');
+          //   },
+          // ),
+          // const Divider(),
+          // ListTile(
+          //   leading: const Icon(Icons.payment),
+          //   title: const Text('Orders'),
+          //   onTap: () {
+          //     Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
+          //   },
+          // ),
+          // const Divider(),
+          // ListTile(
+          //   leading: const Icon(Icons.edit),
+          //   title: const Text('Manage Products'),
+          //   onTap: () {
+          //     Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
+          //   },
+          // ),
+          // const Divider(),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
