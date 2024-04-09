@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:ct484_project/ui/profile/profile_screen.dart';
 import 'package:ct484_project/ui/screen.dart';
-import 'package:flutter/material.dart';
 
 import '../ui/products/products_overview_screen.dart';
 import '../ui/products/products_manager.dart';
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_filled),
             label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
@@ -50,16 +50,16 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Sản Phẩm',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
+            icon: Icon(Icons.space_dashboard_sharp),
             label: 'Đơn hàng',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_sharp),
             label: 'Cá nhân'
           )
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.teal,
+        selectedItemColor: Theme.of(context).colorScheme.primary, // Sử dụng màu chính của ứng dụng
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

@@ -16,7 +16,6 @@ class CartItemCard extends StatelessWidget {
   });
 
   @override
-
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(cartItem.id),
@@ -28,7 +27,7 @@ class CartItemCard extends StatelessWidget {
           horizontal: 15,
           vertical: 4,
         ),
-        child: const Icon (
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
           size: 40,
@@ -43,7 +42,7 @@ class CartItemCard extends StatelessWidget {
       },
       onDismissed: (direction) {
         print('Cart item dismissed');
-        context.read<CartManager>().clearItem(productId);
+        context.read<CartManager>().removeItem(productId);
       },
       child: ItemInfoCard(cartItem),
     );
@@ -53,19 +52,19 @@ class CartItemCard extends StatelessWidget {
 class ItemInfoCard extends StatelessWidget {
   const ItemInfoCard(
     this.cartItem, {
-      super.key,
-    });
+    super.key,
+  });
 
   final CartItem cartItem;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
         vertical: 4,
       ),
-      child: Padding (
+      child: Padding(
         padding: const EdgeInsets.all(8),
         child: ListTile(
           leading: ClipRRect(
@@ -79,7 +78,7 @@ class ItemInfoCard extends StatelessWidget {
           ),
           title: Text(cartItem.title),
           subtitle: Text('Total: \$${(cartItem.price * cartItem.quantity)}'),
-          trailing: Text (
+          trailing: Text(
             '${cartItem.quantity} x \$${cartItem.price}',
             style: Theme.of(context).textTheme.titleMedium,
           ),

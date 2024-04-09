@@ -79,7 +79,7 @@ class _AuthCardState extends State<AuthCard> {
     final deviceSize = MediaQuery.sizeOf(context);
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       elevation: 8.0,
       child: Container(
@@ -150,7 +150,7 @@ class _AuthCardState extends State<AuthCard> {
   Widget _buildPasswordConfirmField() {
     return TextFormField(
       enabled: _authMode == AuthMode.signup,
-      decoration: const InputDecoration(labelText: 'Confirm Password'),
+      decoration: const InputDecoration(labelText: 'Confirm Password', prefixIcon: Icon(Icons.lock_outline),),
       obscureText: true,
       validator: _authMode == AuthMode.signup
           ? (value) {
@@ -165,7 +165,7 @@ class _AuthCardState extends State<AuthCard> {
 
   Widget _buildPasswordField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Password'),
+      decoration: const InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.lock_outline),),
       obscureText: true,
       controller: _passwordController,
       validator: (value) {
@@ -182,7 +182,7 @@ class _AuthCardState extends State<AuthCard> {
 
   Widget _buildEmailField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'E-Mail'),
+      decoration: const InputDecoration(labelText: 'E-Mail', prefixIcon: Icon(Icons.email_outlined),), 
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty || !value.contains('@')) {
