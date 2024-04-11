@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ct484_project/ui/profile/profile_screen.dart';
 import 'package:ct484_project/ui/screen.dart';
+import 'package:flutter/widgets.dart';
 
 import '../ui/products/products_overview_screen.dart';
 import '../ui/products/products_manager.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(
+    { super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -18,9 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  
   final List<Widget> _widgetOptions = [
     const ProductsOverviewScreen(),
-    const UserProductsScreen(),
     const OrderScreen(),
     const ProfileScreen(),
   ];
@@ -44,10 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
             label: 'Trang chủ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_card),
-            label: 'Sản Phẩm',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.space_dashboard_sharp),

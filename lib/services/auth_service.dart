@@ -11,9 +11,10 @@ import '../models/auth_token.dart';
 class AuthService {
   static const _authTokenKey = 'authToken';
   late final String? _apiKey;
+  bool isAdmin = false;
 
   AuthService() {
-    _apiKey = dotenv.env['FIREBASE_API_KEY'];
+    (isAdmin)?_apiKey = dotenv.env['FIREBASE_API_KEY_ADMIN']: _apiKey = dotenv.env['FIREBASE_API_KEY'];;
   }
 
   String _buildAuthUrl(String method) {

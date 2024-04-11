@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
             home: 
             //SafeArea(child: homeScreen),
             authManager.isAuth
-                ? SafeArea(child: HomeScreen())
+                ? (authManager.isAdmin!) ? const AdminProductsScreen() :const SafeArea(child: HomeScreen())
                 : FutureBuilder(
                     future: authManager.tryAutoLogin(),
                     builder: (ctx, snapshot) {
@@ -106,8 +106,8 @@ class MyApp extends StatelessWidget {
               OrderScreen.routeName: (ctx) => const SafeArea(
                     child: OrderScreen(),
                   ),
-              UserProductsScreen.routeName: (ctx) => const SafeArea(
-                    child: UserProductsScreen(),
+              AdminProductsScreen.routeName: (ctx) => const SafeArea(
+                    child: AdminProductsScreen(),
                   ),
               ProductsOverviewScreen.routeName: (ctx) => const SafeArea(
                     child: ProductsOverviewScreen(),

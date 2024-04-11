@@ -1,5 +1,5 @@
 import 'package:ct484_project/ui/products/products_overview_screen.dart';
-import 'package:ct484_project/ui/products/user_product_screen.dart';
+import 'package:ct484_project/ui/products/admin_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -6,7 +6,7 @@ import '../shared/dialog_utils.dart';
 
 import 'auth_manager.dart';
 
-enum AuthMode { signup, login }
+enum AuthMode { signup, login, adminLogin }
 
 class AuthCard extends StatefulWidget {
   const AuthCard({
@@ -38,10 +38,12 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.login) {
         // Log user in
-        await context.read<AuthManager>().login(
-              _authData['email']!,
-              _authData['password']!,
-            );
+        await context.read<AuthManager>().login(_authData['email']!,
+            _authData['password']!, (_authMode == AuthMode.adminLogin));
+      } else if (_authMode == AuthMode.adminLogin) {
+        // Log user in
+        await context.read<AuthManager>().login(_authData['email']!,
+            _authData['password']!, (_authMode == AuthMode.adminLogin));
       } else {
         // Sign user up
         await context.read<AuthManager>().signup(
@@ -83,9 +85,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.signup ? 320 : 260,
+        height: _authMode == AuthMode.signup ? 385 : 330,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
+            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 385 : 330),
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -93,6 +95,8 @@ class _AuthCardState extends State<AuthCard> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                if (_authMode == AuthMode.adminLogin) 
+                  const Text('Admin', style: TextStyle(fontSize: 17)),
                 _buildEmailField(),
                 _buildPasswordField(),
                 if (_authMode == AuthMode.signup) _buildPasswordConfirmField(),
@@ -109,6 +113,14 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 _buildAuthModeSwitchButton(),
+                
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _authMode = AuthMode.adminLogin;
+                      });
+                    },
+                    child: const Text("Log in as admin"))
               ],
             ),
           ),
@@ -150,7 +162,10 @@ class _AuthCardState extends State<AuthCard> {
   Widget _buildPasswordConfirmField() {
     return TextFormField(
       enabled: _authMode == AuthMode.signup,
-      decoration: const InputDecoration(labelText: 'Confirm Password', prefixIcon: Icon(Icons.lock_outline),),
+      decoration: const InputDecoration(
+        labelText: 'Confirm Password',
+        prefixIcon: Icon(Icons.lock_outline),
+      ),
       obscureText: true,
       validator: _authMode == AuthMode.signup
           ? (value) {
@@ -165,7 +180,10 @@ class _AuthCardState extends State<AuthCard> {
 
   Widget _buildPasswordField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.lock_outline),),
+      decoration: const InputDecoration(
+        labelText: 'Password',
+        prefixIcon: Icon(Icons.lock_outline),
+      ),
       obscureText: true,
       controller: _passwordController,
       validator: (value) {
@@ -182,7 +200,10 @@ class _AuthCardState extends State<AuthCard> {
 
   Widget _buildEmailField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'E-Mail', prefixIcon: Icon(Icons.email_outlined),), 
+      decoration: const InputDecoration(
+        labelText: 'E-Mail',
+        prefixIcon: Icon(Icons.email_outlined),
+      ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty || !value.contains('@')) {

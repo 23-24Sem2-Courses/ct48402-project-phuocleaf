@@ -5,14 +5,13 @@ import 'package:flutter/foundation.dart';
 import '../../models/auth_token.dart';
 import '../../services/auth_service.dart';
 
-// enum UserRole {
-//   user,
-//   admin,
-// }
+
 
 class AuthManager with ChangeNotifier {
   AuthToken? _authToken;
   Timer? _authTimer;
+
+  bool? isAdmin;
 
   final AuthService _authService = AuthService();
 
@@ -38,11 +37,21 @@ class AuthManager with ChangeNotifier {
     notifyListeners();
   }
 
+  void setIsAdmin(a){
+    isAdmin =  a;
+  }
+  
+  bool? getIsAdmin(){
+    return isAdmin;
+  }
+
   Future<void> signup(String email, String password) async {
     _setAuthToken(await _authService.signup(email, password));
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String email, String password, bool isAdminLogin) async {
+    _authService.isAdmin = isAdminLogin;
+    setIsAdmin(isAdminLogin);
     _setAuthToken(await _authService.login(email, password));
   }
 

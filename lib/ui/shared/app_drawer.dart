@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../auth/auth_manager.dart';
 import '../orders/orders_screen.dart';
-import '../products/user_product_screen.dart';
+import '../products/admin_product_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer ({super.key});

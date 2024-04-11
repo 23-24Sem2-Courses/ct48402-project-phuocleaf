@@ -3,7 +3,7 @@ export 'products/edit_product_screen.dart';
 
 export 'products/products_overview_screen.dart';
 export 'products/product_detail_screen.dart';
-export 'products/user_product_screen.dart';
+export 'products/admin_product_screen.dart';
 export 'products/products_manager.dart';
 
 export 'orders/orders_screen.dart';

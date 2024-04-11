@@ -8,11 +8,11 @@ import '../shared/app_drawer.dart';
 
 import 'products_manager.dart';
 
-class UserProductsScreen extends StatelessWidget {
+class AdminProductsScreen extends StatelessWidget {
 
   static const routeName = '/user-products';
 
-  const UserProductsScreen({super.key});
+  const AdminProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
