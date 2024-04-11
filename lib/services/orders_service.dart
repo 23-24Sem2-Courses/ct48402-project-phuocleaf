@@ -15,7 +15,7 @@ class OrdersService extends FirebaseService {
      
 
       final ordersMap = await httpFetch(
-        '$databaseUrl/orders.json?auth=$token',
+        '$databaseUrl/$userId/orders.json?auth=$token',
       ) as Map<String, dynamic>;
 
       
@@ -44,7 +44,7 @@ class OrdersService extends FirebaseService {
   Future<OrderItem?> addOrder(OrderItem order) async {
     try{
       final newOrder = await httpFetch(
-        '$databaseUrl/orders.json?auth=$token',
+        '$databaseUrl/$userId/orders.json?auth=$token',
         method: HttpMethod.post,
         body: jsonEncode(
           order.toJson()
