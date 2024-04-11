@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ct484_project/ui/screen.dart';
 import 'package:provider/provider.dart';
-
+import '../auth/auth_manager.dart';
 import '../shared/app_drawer.dart';
 
 import '../cart/cart_screen.dart';
@@ -15,6 +15,7 @@ import 'products_grid.dart';
 enum FilterOptions { favorites, all }
 
 class ProductsOverviewScreen extends StatefulWidget {
+  static const routeName = '/products-overview';
   const ProductsOverviewScreen({super.key});
 
   @override
@@ -34,9 +35,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authToken = context.read<AuthManager>().authToken;
+    final email = authToken!.email;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MyShop'),
+        title: Text('Xin chào "${email.split('@')[0].toUpperCase()}"'),
         actions: <Widget>[
           ProductFilterMenu(
             onFilterSelected: (filter) {
@@ -56,7 +59,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
-        drawer: const AppDrawer(),
+        //drawer: const AppDrawer(),
         body: FutureBuilder(
           future: _fetchProducts,
           builder: (context, snapshot) {
@@ -86,7 +89,7 @@ class ProductFilterMenu extends StatelessWidget {
     return PopupMenuButton(
       onSelected: onFilterSelected,
       icon: const Icon(
-        Icons.more_vert,
+        Icons.notes_outlined,
       ),
       itemBuilder: (ctx) => [
         const PopupMenuItem(
@@ -110,12 +113,12 @@ class ShoppingCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CartManager>(
-      builder: (ctx, cartManager, child) {
+      builder: (ctx, CartManager, child) {
         return TopRightBadge(
-          data: CartManager().productCount,
+          data: CartManager.productCount,
           child: IconButton(
             icon: const Icon(
-              Icons.shopping_bag_sharp,
+              Icons.shopping_bag_outlined,
             ),
             onPressed: onPressed,
           ),

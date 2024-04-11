@@ -1,7 +1,8 @@
+import 'package:ct484_project/models/product.dart';
+import 'package:ct484_project/ui/cart/cart_manager.dart';
+import 'package:ct484_project/ui/cart/cart_screen.dart';
+import 'package:ct484_project/ui/products/products_overview_screen.dart';
 import 'package:flutter/material.dart';
-import '../../models/product.dart';
-import '../../ui/cart/cart_manager.dart';
-import '../../ui/cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -17,7 +18,13 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 1;
-  bool isFavorite = false;
+  late ValueNotifier<bool> isFavoriteNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavoriteNotifier = ValueNotifier(widget.product.isFavorite);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,36 +33,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         title: Text(widget.product.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_filled),
             onPressed: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
+          ShoppingCartButton(
             onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      CartScreen(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    var begin = Offset(1.0, 0.0);
-                    var end = Offset.zero;
-                    var curve = Curves.easeInOutQuart;
-
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-
-                    var offsetAnimation = animation.drive(tween);
-
-                    return SlideTransition(
-                      position: offsetAnimation,
-                      child: child,
-                    );
-                  },
-                ),
-              );
+              Navigator.of(context).pushNamed(CartScreen.routeName);
             },
           ),
         ],
@@ -65,7 +50,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 300,
+              height: 400,
               width: double.infinity,
               child: Image.network(
                 widget.product.imageUrl,
@@ -77,40 +62,74 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    '\$${widget.product.price}',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.product.title,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            '\$${widget.product.price}',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: isFavoriteNotifier,
+                        builder: (context, isFavorite, _) {
+                          return GestureDetector(
+                            onTap: () {
+                              final newFavoriteStatus = !isFavorite;
+                              isFavoriteNotifier.value = newFavoriteStatus;
+                              widget.product.isFavorite = newFavoriteStatus;
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isFavorite
+                                    ? Colors.pink
+                                    : Colors.transparent,
+                              ),
+                              child: Icon(
+                                Icons.favorite,
+                                color: isFavorite ? Colors.white : Colors.grey,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    widget.product.description,
-                    style: TextStyle(
-                      fontSize: 16,
+                  SizedBox(height: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                      widget.product.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            isFavorite = !isFavorite;
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              isFavorite ? Colors.red : Colors.grey,
-                        ),
-                        child: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.white,
-                        ),
-                      ),
                       Row(
                         children: <Widget>[
                           IconButton(
@@ -123,12 +142,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               });
                             },
                           ),
-                          Text(
-                            '$quantity',
-                            style: TextStyle(
-                              fontSize: 18,
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors
+                                      .grey), // Thêm đường viền xung quanh
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$quantity', // Hiển thị số lượng
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                           ),
+                          SizedBox(
+                              width:
+                                  10), // Khoảng trắng giữa số lượng và nút cộng
                           IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () {
@@ -148,7 +180,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Added to Cart'),
+                              content: Text('Đã Thêm Vào Giỏ Hàng'),
                               duration: Duration(seconds: 2),
                               action: SnackBarAction(
                                 label: 'UNDO',
@@ -162,9 +194,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Color.fromARGB(255, 205, 80, 38),
+                          foregroundColor: Colors.white,
                         ),
-                        child: Text('Thêm vào giỏ hàng'),
+                        child: Text('Thêm Vào Giỏ Hàng'),
                       ),
                     ],
                   ),

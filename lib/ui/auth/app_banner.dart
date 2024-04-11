@@ -10,31 +10,30 @@ class AppBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
+      //margin: const EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 94.0,
+        vertical: 4.0,
+        horizontal: 15.0,
       ),
-      transform: Matrix4.rotationZ(-8 * pi / 180)..translate(-10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.deepOrange.shade900,
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 8,
-            color: Colors.black26,
-            offset: Offset(0, 2),
-          )
+    
+      child: Row(
+        children: [
+          // Text(
+          //   'Chào mừng đến với Trà Sữa của chúng tôi',
+          //   style: TextStyle(
+          //     color: Theme.of(context).textTheme.titleMedium?.color,
+          //     fontSize: 15,
+          //     fontFamily: 'Poppins',
+          //     fontWeight: FontWeight.normal,
+          //   ),
+          // ),
+          Image.asset(
+            'assets/images/ts2.png', // Đường dẫn hình ảnh của bạn
+            width: 380, // Đặt kích thước hình ảnh
+            height: 300,
+          ),
+          
         ],
-      ),
-      child: Text(
-        'MyShop',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.titleLarge?.color,
-          fontSize: 50,
-          fontFamily: 'Anton',
-          fontWeight: FontWeight.normal,
-        ),
       ),
     );
   }

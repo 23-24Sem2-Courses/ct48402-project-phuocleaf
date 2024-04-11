@@ -24,35 +24,37 @@ class CartManager with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addItem(Product product,int quantity) async {
-    var k=null;
-    _items.forEach((i, value) async { 
-      if(_items[k]!.id == product.id){
-        k = i;
-      }
-    });
-    if(k != null){
-        CartItem cartItem = CartItem(
-          id: _items[k]!.id, 
-          title: _items[k]!.title, 
-          imageUrl: _items[k]!.imageUrl, 
-          quantity: _items[k]!.quantity + quantity, 
-          price: _items[k]!.price);
+  Future<void> addItem(Product product, int quantity) async {
+  // Tìm kiếm trong _items xem có sản phẩm có cùng id với product không
+  String? existingCartItemKey;
+  _items.forEach((key, value) {
+    if (value.id == product.id) {
+      existingCartItemKey = key;
+    }
+  });
 
-        await _cartService.updateCart(cartItem);
-     
-      }else{
-         CartItem newItem = CartItem(
-          id: product.id ?? "",
-          title: product.title, 
-          imageUrl: product.imageUrl, 
-          quantity: quantity, 
-          price: product.price
-        );
-        final newCartItem = await _cartService.addCart(newItem);
-   
-      }
+  // Nếu tìm thấy sản phẩm trong giỏ hàng
+  if (existingCartItemKey != null) {
+    // Cập nhật số lượng của sản phẩm đã tồn tại
+    final existingCartItem = _items[existingCartItemKey]!;
+    final updatedQuantity = existingCartItem.quantity + quantity;
+    final updatedCartItem = existingCartItem.copyWith(quantity: updatedQuantity);
+
+    await _cartService.updateCart(updatedCartItem);
+  } else {
+    // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới sản phẩm
+    final newCartItem = CartItem(
+      id: product.id ?? "",
+      title: product.title,
+      imageUrl: product.imageUrl,
+      quantity: quantity,
+      price: product.price,
+    );
+
+    await _cartService.addCart(newCartItem);
   }
+}
+
   int get productCount {
     return _items.length;
   }

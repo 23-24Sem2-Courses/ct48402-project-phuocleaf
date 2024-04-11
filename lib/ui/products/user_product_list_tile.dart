@@ -63,7 +63,7 @@ class DeleteUserProductButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.delete),
+      icon: const Icon(Icons.delete_rounded),
       onPressed: onPressed,
       color: Theme.of(context).colorScheme.error,
     );
@@ -78,7 +78,7 @@ class EditUserProductButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.edit),
+      icon: const Icon(Icons.note_alt_rounded),
       onPressed: onPressed,
       color: Theme.of(context).colorScheme.primary,
     );

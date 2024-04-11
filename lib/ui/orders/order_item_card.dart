@@ -58,6 +58,7 @@ class OrderItemList extends StatelessWidget {
         vertical: 4,
       ),
       height: min(order.productCount * 20.0 + 10, 100),
+      
       child: ListView(
         children: order.products.map(
           (prod) => Row (

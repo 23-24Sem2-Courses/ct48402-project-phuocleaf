@@ -5,6 +5,11 @@ import 'package:flutter/foundation.dart';
 import '../../models/auth_token.dart';
 import '../../services/auth_service.dart';
 
+// enum UserRole {
+//   user,
+//   admin,
+// }
+
 class AuthManager with ChangeNotifier {
   AuthToken? _authToken;
   Timer? _authTimer;
@@ -18,6 +23,14 @@ class AuthManager with ChangeNotifier {
   AuthToken? get authToken {
     return _authToken;
   }
+
+  // UserRole get userRole {
+  //   if(_authToken != null && _authToken!.role == 'admin') {
+  //     return UserRole.admin;
+  //   } else {
+  //     return UserRole.user;
+  //   }
+  // }
 
   void _setAuthToken(AuthToken token) {
     _authToken = token;

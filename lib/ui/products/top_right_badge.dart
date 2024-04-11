@@ -36,6 +36,7 @@ class TopRightBadge extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 10,
+                color: Colors.white,
               ),
             ),
           ),
