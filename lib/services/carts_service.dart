@@ -15,7 +15,7 @@ class CartsService extends FirebaseService {
           filteredByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
 
       final cartsMap = await httpFetch(
-        '$databaseUrl/carts.json?auth=$token&$filters',
+        '$databaseUrl/$userId/carts.json?auth=$token&$filters',
       ) as Map<String, dynamic>;
 
 
@@ -36,7 +36,7 @@ class CartsService extends FirebaseService {
     try{
      
       final newCart = await httpFetch(
-        '$databaseUrl/carts.json?auth=$token',
+        '$databaseUrl/$userId/carts.json?auth=$token',
         method: HttpMethod.post,
         body: jsonEncode({
           'id': newItem.id,
