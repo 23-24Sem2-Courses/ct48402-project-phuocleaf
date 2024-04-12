@@ -1,8 +1,9 @@
-import 'package:ct484_project/models/product.dart';
-import 'package:ct484_project/ui/cart/cart_manager.dart';
-import 'package:ct484_project/ui/cart/cart_screen.dart';
 import 'package:ct484_project/ui/products/products_overview_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Import NumberFormat
+import '../../models/product.dart';
+import '../../ui/cart/cart_manager.dart';
+import '../../ui/cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -28,6 +29,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Format price to VND
+    final priceFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    final formattedPrice = priceFormat.format(widget.product.price);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product.title),
@@ -72,14 +77,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             widget.product.title,
                             style: TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '\$${widget.product.price}',
+                            formattedPrice, // Display formatted price
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: const Color.fromARGB(255, 40, 40, 40),
                               fontSize: 18,
                             ),
                           ),
@@ -147,20 +152,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             height: 40,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Colors
-                                      .grey), // Thêm đường viền xung quanh
+                                color: Colors.grey,
+                              ), // Add border around container
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Center(
                               child: Text(
-                                '$quantity', // Hiển thị số lượng
+                                '$quantity', // Display quantity
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
                           ),
                           SizedBox(
-                              width:
-                                  10), // Khoảng trắng giữa số lượng và nút cộng
+                            width: 10,
+                          ), // Spacing between quantity and add button
                           IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () {

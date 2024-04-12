@@ -13,7 +13,7 @@ class CartsService extends FirebaseService {
     try {
       
       final cartsMap = await httpFetch(
-        '$databaseUrl/$userId/carts.json?auth=$token&$filters',
+        '$databaseUrl/carts/$userId.json?auth=$token&filters',
       ) as Map<String, dynamic>;
 
 
@@ -34,7 +34,7 @@ class CartsService extends FirebaseService {
     try{
      
       final newCart = await httpFetch(
-        '$databaseUrl/$userId/carts.json?auth=$token',
+        '$databaseUrl/carts/$userId.json?auth=$token',
         method: HttpMethod.post,
         body: jsonEncode({
           'id': newItem.id,

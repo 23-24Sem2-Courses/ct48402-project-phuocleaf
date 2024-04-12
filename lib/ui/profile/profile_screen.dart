@@ -22,30 +22,29 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          const Divider(),
           buildInformationField(
             icon: const Icon(Icons.email),
             content: email,
           ),
-          const Divider(),
-          buildInformationField(
-            icon: const Icon(Icons.bar_chart_outlined),
-            content: '${products.length} Sản phẩm',
-          ),
-          const Divider(),
-          buildInformationField(
-            icon: const Icon(Icons.shopping_cart),
-            content: '${carts.length} Sản phẩm trong giỏ hàng',
-          ),
-          const Divider(),
+          const SizedBox(height: 10),
           buildInformationField(
             icon: const Icon(Icons.shopping_bag),
+            content: '${carts.length} Sản phẩm trong giỏ hàng',
+          ),
+          const SizedBox(height: 10),
+          buildInformationField(
+            icon: const Icon(Icons.library_books),
             content: '${orders.length} Hóa đơn',
           ),
-          const Divider(),
+          const SizedBox(height: 10),
+          // Nút "Đăng xuất" cũng được đặt trong một Container có bo góc
           Container(
-            padding: const EdgeInsets.only(left: 20),
-            alignment: Alignment.center,
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: TextButton(
               onPressed: () {
                 showDialog(
@@ -74,20 +73,22 @@ class ProfileScreen extends StatelessWidget {
                   },
                 );
               },
-              child: const Row(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.exit_to_app,
-                    color: Colors.teal,
+                  const Icon(Icons.exit_to_app),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Đăng xuất',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Đăng xuất')
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -98,17 +99,23 @@ class ProfileScreen extends StatelessWidget {
     required String content,
   }) {
     return Container(
-      padding: const EdgeInsets.only(left: 30),
-      child: Column(
+      
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(64, 206, 206, 206), 
+        borderRadius: BorderRadius.circular(10), 
+        
+      ),
+      child: Row(
         children: [
-          Row(
-            children: [
-              icon,
-              const SizedBox(
-                width: 10,
-              ),
-              Text(content),
-            ],
+          icon,
+          const SizedBox(width: 10),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 16,
+            ),
           ),
         ],
       ),

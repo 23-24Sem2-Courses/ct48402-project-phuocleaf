@@ -94,11 +94,11 @@ class ProductFilterMenu extends StatelessWidget {
       itemBuilder: (ctx) => [
         const PopupMenuItem(
           value: FilterOptions.favorites,
-          child: Text('Only Favorites'),
+          child: Text('Chỉ Sản Phẩm Yêu Thích'),
         ),
         const PopupMenuItem(
           value: FilterOptions.all,
-          child: Text('Show All'),
+          child: Text('Hiển Thị Tất Cả'),
         ),
       ],
     );

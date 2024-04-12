@@ -120,7 +120,7 @@ class _AuthCardState extends State<AuthCard> {
                         _authMode = AuthMode.adminLogin;
                       });
                     },
-                    child: const Text("Log in as admin"))
+                    child: const Text("QUẢN TRỊ VIÊN?"))
               ],
             ),
           ),
@@ -140,11 +140,14 @@ class _AuthCardState extends State<AuthCard> {
         ),
       ),
       child:
-          Text('${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+          Text('${_authMode == AuthMode.login ? 'ĐĂNG KÝ' : 'ĐĂNG NHẬP'} THAY THẾ'),
     );
   }
 
+
   Widget _buildSubmitButton() {
+  // Kiểm tra nếu chế độ đăng nhập là admin thì hiển thị nút đăng nhập
+  if (_authMode == AuthMode.adminLogin) {
     return ElevatedButton(
       onPressed: _submit,
       style: ElevatedButton.styleFrom(
@@ -155,22 +158,38 @@ class _AuthCardState extends State<AuthCard> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
       ),
-      child: Text(_authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
+      child: const Text('ĐĂNG NHẬP'),
+    );
+  } else {
+    // Nếu không phải chế độ đăng nhập là admin thì hiển thị nút đăng ký
+    return ElevatedButton(
+      onPressed: _submit,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      ),
+      child: Text(_authMode == AuthMode.login ? 'ĐĂNG NHẬP' : 'ĐĂNG KÝ'),
     );
   }
+}
+
 
   Widget _buildPasswordConfirmField() {
     return TextFormField(
       enabled: _authMode == AuthMode.signup,
       decoration: const InputDecoration(
-        labelText: 'Confirm Password',
+        labelText: 'Nhập Lại Mật Khẩu',
         prefixIcon: Icon(Icons.lock_outline),
       ),
       obscureText: true,
       validator: _authMode == AuthMode.signup
           ? (value) {
               if (value != _passwordController.text) {
-                return 'Passwords do not match!';
+                return 'Mật khẩu không khớp!';
               }
               return null;
             }
@@ -181,14 +200,14 @@ class _AuthCardState extends State<AuthCard> {
   Widget _buildPasswordField() {
     return TextFormField(
       decoration: const InputDecoration(
-        labelText: 'Password',
+        labelText: 'Mật Khẩu',
         prefixIcon: Icon(Icons.lock_outline),
       ),
       obscureText: true,
       controller: _passwordController,
       validator: (value) {
         if (value == null || value.length < 5) {
-          return 'Password is too short!';
+          return 'Mật khẩu quá ngắn!';
         }
         return null;
       },

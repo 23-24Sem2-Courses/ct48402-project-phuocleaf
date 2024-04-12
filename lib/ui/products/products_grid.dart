@@ -22,28 +22,23 @@ class ProductsGrid extends StatelessWidget {
       children: [
         CarouselSlider(
           items: [
-            Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjg7Znku79ueYHcateuYNvwr7N2xGmQKEmtOiuKV4GpQ&s',
-              fit: BoxFit.cover, 
-            ),
-            Image.network(
-              'https://feelingteaonline.com/wp-content/uploads/2020/07/menu1.jpg',
+            Image.asset(
+              'assets/images/banner1.jpg',
               fit: BoxFit.cover,
             ),
-            Image.network(
-              'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSxiBSELbXcTZCIjIn-ZmQ74FYwK8hXFIKeGkrKjozRM61TckL_',
+            Image.asset(
+              'assets/images/banner2.jpg',
               fit: BoxFit.cover,
             ),
-             Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIz-BWREoB29m0flsr-YKwnIn2uP3yuKNh2AogkrEQSJuBntWQWTSTTkbrrdI_uzkhNzg&usqp=CAU',
+            Image.asset(
+              'assets/images/banner3.jpg',
               fit: BoxFit.cover,
             ),
-            
           ],
           options: CarouselOptions(
-            height: 175, // Độ cao của slider
+            height: 175, 
             aspectRatio: 16 / 9,
-            viewportFraction: 1, // Tỷ lệ ảnh hiển thị trong viewport
+            viewportFraction: 1, 
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,

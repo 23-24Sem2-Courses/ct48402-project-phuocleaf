@@ -28,7 +28,7 @@ class AppBanner extends StatelessWidget {
           //   ),
           // ),
           Image.asset(
-            'assets/images/ts2.png', // Đường dẫn hình ảnh của bạn
+            'assets/images/banner.png', // Đường dẫn hình ảnh của bạn
             width: 380, // Đặt kích thước hình ảnh
             height: 300,
           ),

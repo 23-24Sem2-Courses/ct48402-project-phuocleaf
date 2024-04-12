@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ct484_project/ui/cart/cart_manager.dart';
 import 'package:provider/provider.dart';
-
+import 'package:intl/intl.dart';
 import '../../models/cart_item.dart';
 import '../shared/dialog_utils.dart';
 
@@ -37,7 +37,7 @@ class CartItemCard extends StatelessWidget {
       confirmDismiss: (direction) {
         return showConfirmDialog(
           context,
-          'Do you want to remove the item from the cart?',
+          'Bạn Muốn Xóa Sản Phẩm Khỏi Giỏ Hàng?',
         );
       },
       onDismissed: (direction) {
@@ -59,10 +59,14 @@ class ItemInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    final totalAmount = cartItem.price * cartItem.quantity;
+    final formattedTotalAmount = currencyFormat.format(totalAmount);
+
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
-        vertical: 4,
+        vertical: 10,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -72,14 +76,14 @@ class ItemInfoCard extends StatelessWidget {
             child: Image.network(
               cartItem.imageUrl,
               fit: BoxFit.cover,
-              width: 80,
-              height: 80,
+              width: 60,
+              height: 60,
             ),
           ),
           title: Text(cartItem.title),
-          subtitle: Text('Total: \$${(cartItem.price * cartItem.quantity)}'),
+          subtitle: Text('Tổng: $formattedTotalAmount'),
           trailing: Text(
-            '${cartItem.quantity} x \$${cartItem.price}',
+            '${cartItem.quantity} x $formattedTotalAmount',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),

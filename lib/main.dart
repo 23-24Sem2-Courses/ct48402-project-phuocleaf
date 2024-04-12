@@ -65,30 +65,13 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<AuthManager>(
         builder: (ctx, authManager, child) {
-          // Widget homeScreen;
-
-          // if (authManager.isAuth) {
-          //   if (authManager.userRole == UserRole.admin) {
-          //     homeScreen = AdminHomeScreen(); 
-          //   } else {
-          //     homeScreen = HomeScreen();
-          //   }
-          // } else {
-          //   homeScreen = FutureBuilder(
-          //     future: authManager.tryAutoLogin(),
-          //     builder: (ctx, snapshot) {
-          //       return snapshot.connectionState == ConnectionState.waiting
-          //           ? const SplashScreen()
-          //           : const AuthScreen();
-          //     },
-          //   );
-          // }
+          
           return MaterialApp(
             title: 'Shop',
             debugShowCheckedModeBanner: false,
             theme: themeData,
             home: 
-            //SafeArea(child: homeScreen),
+            
             authManager.isAuth
                 ? (authManager.isAdmin!) ? const AdminProductsScreen() :const SafeArea(child: HomeScreen())
                 : FutureBuilder(

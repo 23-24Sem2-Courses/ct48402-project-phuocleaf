@@ -110,7 +110,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         title: const Text('Thông Tin Sản Phẩm'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.save),
+            icon: const Icon(Icons.save_outlined),
             onPressed: _saveForm,
           ),
         ],
@@ -125,10 +125,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
               key: _editForm,
               child: ListView(
                 children: <Widget>[
+                  _buildProductPreview(),
                   _buildTitleField(),
                   _buildPriceField(),
                   _buildDescriptionField(),
-                  _buildProductPreview(),
+                  
                 ],
               ),
             ),
@@ -136,15 +137,44 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 
+Widget _buildProductPreview () {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Center(
+        child: Container (
+          width: 170, 
+          height: 170, 
+          margin: const EdgeInsets.only(top: 8, bottom: 8),
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Colors.grey),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: _imageUrlController.text.isEmpty
+            ? const Text ('Nhập URL')
+            : ClipRRect( // Sử dụng ClipRRect để áp dụng bo góc cho hình ảnh
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                _imageUrlController.text,
+                fit: BoxFit.cover,
+              ),
+            ),
+        ),
+      ),
+      _buildImageURLField(),
+    ],
+  );
+}
+
   TextFormField _buildTitleField () {
     return TextFormField(
       initialValue: _editedProduct.title,
-      decoration: const InputDecoration(labelText: 'Title'),
+      decoration: const InputDecoration(labelText: 'Tên Sản Phẩm'),
       textInputAction: TextInputAction.next,
       autofocus: true,
       validator: (value) {
         if(value!.isEmpty) {
-          return 'Please provide a value.';
+          return 'Hãy cung cấp thông tin.';
         }
         return null;
       },
@@ -157,18 +187,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
   TextFormField _buildPriceField () {
     return TextFormField(
       initialValue: _editedProduct.price.toString(),
-      decoration: const InputDecoration(labelText: 'Price'),
+      decoration: const InputDecoration(labelText: 'Giá'),
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
       validator: (value) {
         if(value!.isEmpty) {
-          return 'Please enter a price.';
+          return 'Hãy nhập giá sản phẩm.';
         }
         if(double.tryParse(value) == null) {
-          return 'Please enter a valid number.';
+          return 'Hãy điền con số hợp lệ';
         }
         if(double.parse(value) <= 0) {
-          return 'Please enter a number greater than zero';
+          return 'Hãy điền con số lớn hơn 0';
         }
         return null;
       },
@@ -181,15 +211,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
   TextFormField _buildDescriptionField () {
     return TextFormField(
       initialValue: _editedProduct.description,
-      decoration: const InputDecoration(labelText: 'Description'),
+      decoration: const InputDecoration(labelText: 'Mô tả'),
       maxLines: 3,
       keyboardType: TextInputType.multiline,
       validator: (value) {
         if(value!.isEmpty) {
-          return 'Please enter a description';
+          return 'Hãy nhập mô tả sản phẩm';
         }
         if(value.length < 10) {
-          return 'Should be at least 10 characters long.';
+          return 'Nên có ít nhất 10 ký tự';
         }
         return null;
       },
@@ -200,36 +230,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 
- Widget _buildProductPreview () {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        Container (
-          width: 100,
-          height: 100,
-          margin: const EdgeInsets.only(top: 8, right: 10),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-          ),
-          child: _imageUrlController.text.isEmpty
-            ? const Text ('Enter a URL')
-            : FittedBox(
-              child: Image.network(
-                _imageUrlController.text,
-                fit: BoxFit.cover,
-              ),
-            ),
-        ),
-        Expanded(
-          child: _buildImageURLField(),
-        ),
-      ],
-    );
-  }
-
   TextFormField _buildImageURLField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Image URL'),
+      decoration: const InputDecoration(labelText: 'URL Hình Ảnh'),
       keyboardType: TextInputType.url,
       textInputAction: TextInputAction.done,
       controller: _imageUrlController,
@@ -237,10 +240,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
       onFieldSubmitted: (vale) => _saveForm(),
       validator: (value) {
         if(value!.isEmpty) {
-          return 'Please enter an image URL.';
+          return 'Hãy nhập URL cho hình ảnh sản phẩm';
         }
         if(!_isValidImageUrl(value)) {
-          return 'Please enter a valid image URL';
+          return 'Hãy nhập URL hợp lệ';
         }
         return null;
       },
