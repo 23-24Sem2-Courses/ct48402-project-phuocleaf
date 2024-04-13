@@ -24,7 +24,7 @@ class AdminProductListTile extends StatelessWidget {
         width: 100,
         child: Row(
           children: <Widget>[
-            EditUserProductButton(
+            EditAdminProductButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   EditProductScreen.routeName,
@@ -33,14 +33,14 @@ class AdminProductListTile extends StatelessWidget {
                 print('Go to edit product screen');
               },
             ),
-            DeleteUserProductButton(
+            DeleteAdminProductButton(
               onPressed: () {
                 context.read<ProductsManager>().deleteProduct(product.id!);
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(const SnackBar(
                     content: Text(
-                      'Xóa sản phẩm',
+                      'Đã Xóa Sản Phẩm',
                       textAlign: TextAlign.center,
                     ),
                   ));
@@ -53,8 +53,8 @@ class AdminProductListTile extends StatelessWidget {
   }
 }
 
-class DeleteUserProductButton extends StatelessWidget {
-  const DeleteUserProductButton({
+class DeleteAdminProductButton extends StatelessWidget {
+  const DeleteAdminProductButton({
     super.key,
     this.onPressed,
   });
@@ -70,8 +70,8 @@ class DeleteUserProductButton extends StatelessWidget {
   }
 }
 
-class EditUserProductButton extends StatelessWidget {
-  const EditUserProductButton({super.key, this.onPressed});
+class EditAdminProductButton extends StatelessWidget {
+  const EditAdminProductButton({super.key, this.onPressed});
 
   final void Function()? onPressed;
 

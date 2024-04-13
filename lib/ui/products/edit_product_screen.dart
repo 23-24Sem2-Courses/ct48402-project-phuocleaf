@@ -8,6 +8,8 @@ import '../shared/dialog_utils.dart';
 
 import 'products_manager.dart';
 
+import 'package:intl/intl.dart';
+
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
 
@@ -184,29 +186,32 @@ Widget _buildProductPreview () {
     );
   }
 
-  TextFormField _buildPriceField () {
-    return TextFormField(
-      initialValue: _editedProduct.price.toString(),
-      decoration: const InputDecoration(labelText: 'Giá'),
-      textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if(value!.isEmpty) {
-          return 'Hãy nhập giá sản phẩm.';
-        }
-        if(double.tryParse(value) == null) {
-          return 'Hãy điền con số hợp lệ';
-        }
-        if(double.parse(value) <= 0) {
-          return 'Hãy điền con số lớn hơn 0';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        _editedProduct = _editedProduct.copyWith(price: double.parse(value!));
-      },
-    );
-  }
+
+TextFormField _buildPriceField() {
+  final currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+  return TextFormField(
+    initialValue: _editedProduct.price != null ? currencyFormat.format(_editedProduct.price) : '',
+    decoration: const InputDecoration(labelText: 'Giá'),
+    textInputAction: TextInputAction.next,
+    keyboardType: TextInputType.number,
+    validator: (value) {
+      if (value!.isEmpty) {
+        return 'Hãy nhập giá sản phẩm.';
+      }
+      if (double.tryParse(value) == null) {
+        return 'Hãy điền con số hợp lệ';
+      }
+      if (double.parse(value) <= 0) {
+        return 'Hãy điền con số lớn hơn 0';
+      }
+      return null;
+    },
+    onSaved: (value) {
+      _editedProduct = _editedProduct.copyWith(price: double.parse(value!));
+    },
+  );
+}
+
 
   TextFormField _buildDescriptionField () {
     return TextFormField(

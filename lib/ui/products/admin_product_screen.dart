@@ -18,9 +18,9 @@ class AdminProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Products'),
+        title: const Text('Quản Lý Sản Phẩm'),
         actions: <Widget>[
-          AddUserProductButton(
+          AddAdminProductButton(
             onPressed: () {
               Navigator.of(context).pushNamed(
                 EditProductScreen.routeName,
@@ -42,7 +42,7 @@ class AdminProductsScreen extends StatelessWidget {
             return RefreshIndicator(
               onRefresh: () =>
                   context.read<ProductsManager>().fetchUsersProducts(),
-              child: const UserProductList(),
+              child: const AdminProductList(),
             );
           },
         ),
@@ -50,8 +50,8 @@ class AdminProductsScreen extends StatelessWidget {
   }
 }
 
-class UserProductList extends StatelessWidget {
-  const UserProductList({super.key});
+class AdminProductList extends StatelessWidget {
+  const AdminProductList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +75,8 @@ class UserProductList extends StatelessWidget {
   }
 }
 
-class AddUserProductButton extends StatelessWidget {
-  const AddUserProductButton({super.key, this.onPressed});
+class AddAdminProductButton extends StatelessWidget {
+  const AddAdminProductButton({super.key, this.onPressed});
 
   final void Function()? onPressed;
 
