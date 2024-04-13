@@ -62,7 +62,7 @@ class ItemInfoCard extends StatelessWidget {
     final currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final totalAmount = cartItem.price * cartItem.quantity;
     final formattedTotalAmount = currencyFormat.format(totalAmount);
-
+    
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
@@ -83,7 +83,7 @@ class ItemInfoCard extends StatelessWidget {
           title: Text(cartItem.title),
           subtitle: Text('Tổng: $formattedTotalAmount'),
           trailing: Text(
-            '${cartItem.quantity} x $formattedTotalAmount',
+            '${cartItem.quantity} x ${currencyFormat.format(cartItem.price)}',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
