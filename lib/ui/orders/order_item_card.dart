@@ -52,13 +52,14 @@ class OrderItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     return Container (
       padding: const EdgeInsets.symmetric(
         horizontal: 15,
         vertical: 4,
       ),
-      height: min(order.productCount * 20.0 + 10, 100),
       
+      height: order.productCount * 30.0 + 10, // Thay đổi chiều cao dựa trên số lượng sản phẩm
       child: ListView(
         children: order.products.map(
           (prod) => Row (
@@ -72,7 +73,8 @@ class OrderItemList extends StatelessWidget {
                 ),
               ),
               Text(
-                '${prod.quantity}x \$${prod.price}',
+                //'${prod.quantity}x \$${prod.price}',
+                '${prod.quantity} x ${currencyFormat.format(prod.price)}',
                 style: const TextStyle(
                   fontSize: 18,
                   color: Colors.grey,
@@ -101,9 +103,10 @@ class OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     return ListTile(
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
-      title: Text('\$${order.amount.toStringAsFixed(2)}'),
+      title: Text(currencyFormat.format(order.amount)),
       subtitle: Text(
         DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime),
       ),
