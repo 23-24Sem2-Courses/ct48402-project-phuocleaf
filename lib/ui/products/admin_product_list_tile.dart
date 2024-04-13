@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../../models/product.dart';
 
-class UserProductListTile extends StatelessWidget {
+class AdminProductListTile extends StatelessWidget {
   final Product product;
 
-  const UserProductListTile(
+  const AdminProductListTile(
     this.product, {
     super.key,
   });
@@ -40,7 +40,7 @@ class UserProductListTile extends StatelessWidget {
                   ..hideCurrentSnackBar()
                   ..showSnackBar(const SnackBar(
                     content: Text(
-                      'Delete a product',
+                      'Xóa sản phẩm',
                       textAlign: TextAlign.center,
                     ),
                   ));
