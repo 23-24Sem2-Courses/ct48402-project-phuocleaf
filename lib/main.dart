@@ -9,7 +9,6 @@ import 'dart:ui';
 import 'ui/screen.dart';
 import 'ui/home_screen.dart';
 
-
 Future<void> main() async {
   await dotenv.load();
   runApp(const MyApp());
@@ -56,24 +55,31 @@ class MyApp extends StatelessWidget {
             return productsManager;
           },
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<AuthManager, CartManager>(
           create: (ctx) => CartManager(),
+          update: (ctx, authManager, cartManager) {
+            cartManager!.authToken = authManager.authToken;
+            return cartManager;
+          },
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<AuthManager, OrdersManager>(
           create: (ctx) => OrdersManager(),
+          update: (ctx, authManager, ordersManager) {
+            ordersManager!.authToken = authManager.authToken;
+            return ordersManager;
+          },
         ),
       ],
       child: Consumer<AuthManager>(
         builder: (ctx, authManager, child) {
-          
           return MaterialApp(
             title: 'Shop',
             debugShowCheckedModeBanner: false,
             theme: themeData,
-            home: 
-            
-            authManager.isAuth
-                ? (authManager.isAdmin!) ? const AdminProductsScreen() :const SafeArea(child: HomeScreen())
+            home: authManager.isAuth
+                ? (authManager.isAdmin!)
+                    ? const AdminProductsScreen()
+                    : const SafeArea(child: HomeScreen())
                 : FutureBuilder(
                     future: authManager.tryAutoLogin(),
                     builder: (ctx, snapshot) {
